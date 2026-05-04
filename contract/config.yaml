@@ -1,0 +1,31 @@
+tenant_name: "WDM"
+
+application_profiles:
+  - name: "DQM-PBKP"
+    epgs:
+      - name: "WEB"
+        provided_contracts:
+          - "DQM-TST_WEB"
+        consumed_contracts:
+          - "CITRIX-PROD-DELIVERY2MS-SQL-PROD"
+          - "DQM-TST_WEB"
+        labels:
+          provider:
+            tag: "black"
+            name: "DQM"
+          consumer:
+            tag: "black"
+            name: "DQM"
+      - name: "DS"
+        provided_contracts:
+          - "CITRIX-PROD-DELIVERY2MS-SQL-PROD"
+          - "DQM-TST_DS"
+        consumed_contracts:
+          - "DQM-TST_WEB"
+        labels:
+          provider:
+            tag: "black"
+            name: "DQM"
+          consumer:
+            tag: "black"
+            name: "DQM"

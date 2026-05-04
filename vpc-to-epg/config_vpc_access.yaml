@@ -1,0 +1,95 @@
+# Access Policy Group for vPC or PC
+access_bundle_group:
+  name: "VPC-DALNBA06"
+  descr: "#1417824"
+  lagT: "node" # 'node' for vPC, 'link' for PC
+  ownerKey: ""
+  nameAlias: ""
+  ownerTag: ""
+  annotation: ""
+  associated_policies:
+    att_ent_p_tn: "LEGACY-L2" # uni/infra/attentp-LEGACY-L2
+    lacp_pol_tn: "LACP-ACTIVE"
+    lldp_if_pol_tn: "ENABLED"
+    stp_if_pol_tn: "BPDU_GUARD_ON"
+    fabric_hif_pol_tn: "10G_Auto"
+
+# Access Port Profile for the vPC
+access_port_profile:
+  name: "VPC-DALNBA06"
+  descr: "#1417824"
+  ownerKey: ""
+  nameAlias: ""
+  ownerTag: ""
+  annotation: ""
+  port_selectors:
+    - name: "ETH_1-14"
+      type: "range"
+      descr: ""
+      ownerKey: ""
+      nameAlias: ""
+      ownerTag: ""
+      annotation: ""
+      fexId: "101"
+      port_blocks:
+        - name: "block1"
+          fromPort: "14"
+          toPort: "14"
+          fromCard: "1"
+          toCard: "1"
+          descr: ""
+          nameAlias: ""
+          annotation: ""
+    - name: "ETH_1-15"
+      type: "range"
+      descr: ""
+      ownerKey: ""
+      nameAlias: ""
+      ownerTag: ""
+      annotation: ""
+      fexId: "101"
+      port_blocks:
+        - name: "block2"
+          fromPort: "15"
+          toPort: "15"
+          fromCard: "1"
+          toCard: "1"
+          descr: ""
+          nameAlias: ""
+          annotation: ""
+
+# Node Profile to associate with the Access Port Profile
+node_profile:
+  name: "DALSWT015-DALSWT016"
+  descr: ""
+  ownerKey: ""
+  nameAlias: ""
+  ownerTag: ""
+  annotation: ""
+  access_port_profile_tn: "VPC-DALNBA06" # Referenced from uni/infra/accportprof-VPC-DALNBA06
+
+# EPG Static Path Binding
+epg_static_path_binding:
+  tenant_name: "WDM"
+  ap_name: "ENT_BACKUP"
+  epg_name: "NETBACKUP"
+  epg_attributes:
+    isAttrBasedEPg: "no"
+    matchT: "AtleastOne"
+  path_attachments:
+    - tDn: "topology/pod-1/protpaths-1015-1016/pathep-[VPC-DALNBA06]"
+      descr: "DALNBA05"
+      primaryEncap: "unknown"
+      instrImedcy: "lazy"
+      mode: "regular"
+      encap: "vlan-419"
+      # Other attributes that were hardcoded and could be dynamic
+      # ipv6Dad: "enabled"
+      # addr: ""
+      # llAddr: "::"
+      # autostate: "disabled"
+      # mac: "00:22:BD:F8:19:FF"
+      # ifInstT: "sub-interface"
+      # mtu: "inherit"
+      # annotation: ""
+      # targetDscp: "unspecified"

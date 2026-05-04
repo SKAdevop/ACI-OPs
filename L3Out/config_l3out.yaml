@@ -1,0 +1,111 @@
+tenant_name: "WDM"
+vrf_config:
+  name: "CTX"
+  ownerKey: ""
+  bdEnforcedEnable: "no"
+  descr: ""
+  nameAlias: ""
+  knwMcastAct: "permit"
+  pcEnfDir: "ingress"
+  ipDataPlaneLearning: "enabled"
+  ownerTag: ""
+  annotation: ""
+  pcEnfPref: "enforced"
+
+l3out_config:
+  name: "CTX-TO-CORE"
+  ownerKey: ""
+  descr: ""
+  targetDscp: "unspecified"
+  enforceRtctrl: "export"
+  nameAlias: ""
+  ownerTag: ""
+  annotation: ""
+  l3_domain_tn: "EXTERNAL-L3" # Referenced from uni/l3dom-EXTERNAL-L3
+  vrf_tn: "CTX" # Referenced from tnFvCtxName
+
+  ospf_ext_p:
+    areaCtrl: "redistribute,summary"
+    areaId: "0.0.0.104"
+    areaType: "nssa"
+    descr: ""
+    multipodInternal: "no"
+    nameAlias: ""
+    areaCost: "1"
+    annotation: ""
+
+  logical_node_profile:
+    name: "BORDER-NODES"
+    ownerKey: ""
+    descr: ""
+    targetDscp: "unspecified"
+    tag: "yellow-green"
+    nameAlias: ""
+    ownerTag: ""
+    annotation: ""
+    nodes:
+      - id: "1011"
+        rtrId: "10.1.1.152"
+        rtrIdLoopBack: "yes"
+      - id: "1012"
+        rtrId: "10.1.1.153"
+        rtrIdLoopBack: "yes"
+
+    logical_interface_profile:
+      name: "CORE-FACING"
+      ownerKey: ""
+      descr: ""
+      tag: "yellow-green"
+      nameAlias: ""
+      ownerTag: ""
+      annotation: ""
+      egress_qos_dpp_pol_tn: "default"
+      ingress_qos_dpp_pol_tn: "default"
+      nd_if_pol_tn: "default"
+      ospf_if_p:
+        authType: "none"
+        name: "OSPF"
+        descr: ""
+        authKeyId: "1"
+        nameAlias: ""
+        annotation: ""
+        ospf_if_pol_tn: "P2P"
+
+      paths:
+        - addr: "10.1.3.214/30"
+          descr: "N7K1-1"
+          encap: "vlan-104"
+          tDn: "topology/pod-1/paths-1011/pathep-[eth1/1]"
+        - addr: "10.1.3.218/30"
+          descr: ""
+          encap: "vlan-104"
+          tDn: "topology/pod-1/paths-1012/pathep-[eth1/1]"
+        - addr: "10.1.3.222/30"
+          descr: "N7K-2"
+          encap: "vlan-104"
+          tDn: "topology/pod-1/paths-1011/pathep-[eth1/2]"
+        - addr: "10.1.3.226/30"
+          descr: ""
+          encap: "vlan-104"
+          tDn: "topology/pod-1/paths-1012/pathep-[eth1/2]"
+        # Common path attributes (ipv6Dad, encapScope, targetDscp, llAddr, autostate, mac, mode, ifInstT, mtu, annotation)
+        # Assuming these are constant or will be passed separately if variable
+
+  external_network_instance_profile:
+    name: "ALL-NET"
+    matchT: "AtleastOne"
+    descr: ""
+    targetDscp: "unspecified"
+    prefGrMemb: "exclude"
+    exceptionTag: ""
+    floodOnEncap: "disabled"
+    nameAlias: ""
+    prio: "unspecified"
+    annotation: ""
+    subnets:
+      - ip: "0.0.0.0/0"
+        name: "" # Can be empty as in original
+        descr: ""
+        nameAlias: ""
+        aggregate: ""
+        annotation: ""
